@@ -104,7 +104,7 @@ export const ro = {
   'settings.title': 'Setări',
   'settings.back': 'Înapoi',
   'settings.voice': 'Voce pentru vorbire',
-  'settings.voiceHint': '„Natural” folosește Piper (voce mai plăcută, română). Restul sunt vocile dispozitivului.',
+  'settings.voiceHint': 'Pe telefon sau tabletă se folosește vocea dispozitivului (cea mai bună disponibilă). Pe calculator poți alege „Natural” (Piper).',
   'settings.voiceNatural': 'Natural (Piper – română)',
   'settings.voiceLoading': 'Se încarcă vocile…',
   'settings.voiceDefault': 'Implicit (sistem)',
