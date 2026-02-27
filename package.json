@@ -1,0 +1,39 @@
+{
+  "name": "aac-app",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "description": "Free web-based AAC (Augmentative and Alternative Communication) for minimally verbal children.",
+  "license": "MIT",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "preview": "vite preview",
+    "test": "vitest run",
+    "test:watch": "vitest"
+  },
+  "dependencies": {
+    "idb": "^8.0.0",
+    "@mintplex-labs/piper-tts-web": "^1.0.4",
+    "onnxruntime-web": "^1.18.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "zustand": "^5.0.0"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^6.6.3",
+    "@testing-library/react": "^16.0.1",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.3",
+    "autoprefixer": "^10.4.20",
+    "fake-indexeddb": "^6.2.5",
+    "jsdom": "^25.0.1",
+    "postcss": "^8.4.47",
+    "tailwindcss": "^3.4.14",
+    "typescript": "~5.6.2",
+    "vite": "^5.4.10",
+    "vite-plugin-pwa": "^0.20.5",
+    "vitest": "^2.1.3"
+  }
+}
