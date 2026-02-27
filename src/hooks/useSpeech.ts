@@ -116,7 +116,7 @@ export function useSpeech(options?: {
         const nativeVoice = allVoices.find((v) => v.voiceURI === preferredVoiceId);
         if (nativeVoice) u.voice = nativeVoice;
       } else if (voices.length > 0) {
-        const best = voices[0];
+        const best = voices[0] as SpeechVoice;
         const nativeVoice = allVoices.find((v) => v.voiceURI === best.voiceURI);
         if (nativeVoice) u.voice = nativeVoice;
       }
