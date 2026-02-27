@@ -1,7 +1,7 @@
 /**
  * Unlock audio on mobile: browsers block programmatic playback until
- * the user has interacted. We resume an AudioContext and/or play a
- * silent sound on first user gesture so Piper TTS and Web Speech work.
+ * the user has interacted. We resume an AudioContext and play a
+ * silent buffer so Web Speech and HTML Audio work on Android/iOS.
  */
 
 let unlocked = false;
@@ -20,16 +20,23 @@ export function unlockAudio(): void {
   if (unlocked) return;
 
   try {
-    // Resume/create AudioContext so Web Audio is allowed on iOS/Android
-    const Ctx = window.AudioContext || (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
+    const Ctx =
+      window.AudioContext ||
+      (window as unknown as { webkitAudioContext?: typeof AudioContext }).webkitAudioContext;
     if (Ctx) {
       audioContext = audioContext || new Ctx();
       if (audioContext.state === 'suspended') {
         audioContext.resume();
       }
+      // Play a short silent buffer so Android Chrome allows subsequent audio
+      const buf = audioContext.createBuffer(1, audioContext.sampleRate * 0.1, audioContext.sampleRate);
+      const src = audioContext.createBufferSource();
+      src.buffer = buf;
+      src.connect(audioContext.destination);
+      src.start(0);
     }
 
-    // Play a silent buffer so HTMLAudioElement playback is allowed
+    // Also try silent HTML Audio (helps some iOS versions)
     const silentWav =
       'data:audio/wav;base64,UklGRiQAAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQAAAAA=';
     const silent = new Audio(silentWav);
