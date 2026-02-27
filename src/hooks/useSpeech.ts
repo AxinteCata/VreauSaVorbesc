@@ -5,6 +5,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react';
 import { isMobileOrTouch } from '@/lib/device';
+import { pickVoiceForUtterance } from '@/lib/pickVoice';
 import {
   getPiperVoiceIdFromPreferred,
   isPiperVoiceId,
@@ -112,16 +113,13 @@ export function useSpeech(options?: {
       u.rate = 0.95;
       u.pitch = 1;
       const allVoices = synth.getVoices();
-      if (preferredVoiceId && !isPiperVoiceId(preferredVoiceId) && voices.length > 0) {
-        const nativeVoice = allVoices.find((v) => v.voiceURI === preferredVoiceId);
-        if (nativeVoice) u.voice = nativeVoice;
-      } else {
-        const first = voices.length > 0 ? voices[0] : null;
-        if (first !== null) {
-          const nativeVoice = allVoices.find((v) => v.voiceURI === first.voiceURI);
-          if (nativeVoice) u.voice = nativeVoice;
-        }
-      }
+      const chosen = pickVoiceForUtterance({
+        preferredVoiceId,
+        isPiper: isPiperVoiceId,
+        sortedVoices: voices,
+        allVoices
+      });
+      if (chosen) u.voice = chosen;
       synth.speak(u);
     },
     [preferredVoiceId, voices]
