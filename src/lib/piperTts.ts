@@ -3,6 +3,8 @@
  * Runs in-browser via ONNX; model downloaded on first use. Fallback to Web Speech if unavailable.
  */
 
+import { unlockAudio } from '@/lib/audioUnlock';
+
 export const PIPER_VOICE_ID = 'ro_RO-mihai-medium';
 export const PIPER_PREFERRED_ID = `piper:${PIPER_VOICE_ID}`;
 
@@ -54,6 +56,18 @@ export async function speakPiper(text: string, voiceId: string = PIPER_VOICE_ID)
       URL.revokeObjectURL(url);
       reject(e);
     };
-    audio.play().catch(reject);
+    const doPlay = () =>
+      audio.play().catch((err: unknown) => {
+        const isBlocked =
+          err instanceof Error &&
+          (err.name === 'NotAllowedError' || (err as { code?: number }).code === 20);
+        if (isBlocked) {
+          unlockAudio();
+          audio.play().catch(reject);
+        } else {
+          reject(err);
+        }
+      });
+    doPlay();
   });
 }

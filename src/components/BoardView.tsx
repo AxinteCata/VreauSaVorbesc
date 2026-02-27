@@ -2,6 +2,7 @@
  * Core AAC board: sentence strip + category nav + even grid of tiles.
  */
 
+import { unlockAudio } from '@/lib/audioUnlock';
 import { useBoardStore } from '@/store/useBoardStore';
 import { useSpeech } from '@/hooks/useSpeech';
 import { SentenceStrip } from './SentenceStrip';
@@ -41,12 +42,14 @@ export function BoardView() {
     .map((id) => board?.categories[id] ?? null);
 
   const handleTileTap = (tile: Tile) => {
+    unlockAudio();
     const text = tile.speechText ?? tile.label;
     speak(text);
     setLastUtterance(text);
   };
 
   const handleSpeakSentence = (text: string) => {
+    unlockAudio();
     speak(text);
     setLastUtterance(text);
   };

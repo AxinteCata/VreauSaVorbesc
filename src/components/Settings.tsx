@@ -3,6 +3,7 @@
  */
 
 import { useState } from 'react';
+import { unlockAudio } from '@/lib/audioUnlock';
 import { useBoardStore } from '@/store/useBoardStore';
 import { useSpeech } from '@/hooks/useSpeech';
 import { PIPER_PREFERRED_ID } from '@/lib/piperTts';
@@ -66,7 +67,10 @@ export function Settings({ onBack, onOpenCredits }: SettingsProps) {
         </select>
         <button
           type="button"
-          onClick={() => speak(t('settings.voiceSampleText'))}
+          onClick={() => {
+            unlockAudio();
+            speak(t('settings.voiceSampleText'));
+          }}
           className="mt-3 min-h-[44px] px-4 py-2 bg-aac-primary text-white rounded-button text-sm font-medium focus:outline-none focus-visible:ring-2 focus-visible:ring-aac-primary"
           aria-label={t('settings.voiceSample')}
         >

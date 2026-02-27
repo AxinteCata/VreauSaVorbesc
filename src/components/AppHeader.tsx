@@ -2,6 +2,7 @@
  * App header: child mode (minimal) vs caregiver mode (full toggles). Romanian.
  */
 
+import { unlockAudio } from '@/lib/audioUnlock';
 import { useBoardStore } from '@/store/useBoardStore';
 import { useSpeech } from '@/hooks/useSpeech';
 import { t } from '@/i18n';
@@ -35,6 +36,7 @@ export function AppHeader(_props: AppHeaderProps) {
     }
   });
   const handleRepeat = () => {
+    unlockAudio();
     if (lastUtterance) speak(lastUtterance);
   };
 
