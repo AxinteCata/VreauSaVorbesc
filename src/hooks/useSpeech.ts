@@ -116,9 +116,9 @@ export function useSpeech(options?: {
         const nativeVoice = allVoices.find((v) => v.voiceURI === preferredVoiceId);
         if (nativeVoice) u.voice = nativeVoice;
       } else {
-        const firstURI = voices[0]?.voiceURI;
-        if (firstURI) {
-          const nativeVoice = allVoices.find((v) => v.voiceURI === firstURI);
+        const first = voices.length > 0 ? voices[0] : null;
+        if (first !== null) {
+          const nativeVoice = allVoices.find((v) => v.voiceURI === first.voiceURI);
           if (nativeVoice) u.voice = nativeVoice;
         }
       }
