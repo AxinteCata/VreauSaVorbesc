@@ -115,10 +115,12 @@ export function useSpeech(options?: {
       if (preferredVoiceId && !isPiperVoiceId(preferredVoiceId) && voices.length > 0) {
         const nativeVoice = allVoices.find((v) => v.voiceURI === preferredVoiceId);
         if (nativeVoice) u.voice = nativeVoice;
-      } else if (voices.length > 0) {
-        const best = voices[0] as SpeechVoice;
-        const nativeVoice = allVoices.find((v) => v.voiceURI === best.voiceURI);
-        if (nativeVoice) u.voice = nativeVoice;
+      } else {
+        const firstURI = voices[0]?.voiceURI;
+        if (firstURI) {
+          const nativeVoice = allVoices.find((v) => v.voiceURI === firstURI);
+          if (nativeVoice) u.voice = nativeVoice;
+        }
       }
       synth.speak(u);
     },
